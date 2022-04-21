@@ -1,20 +1,22 @@
 import * as cors from 'cors';
 import * as express from 'express'
 import router from './routes';
-import bodyParser = require('body-parser');
-const { Sequelize } = require('sequelize');
+import * as bodyParser from 'body-parser';
+import { Sequelize } from 'sequelize';
+import 'dotenv/config';
 
 
 const app = express();
 
-const sequelize = new Sequelize('usuarios', 'postgres', 'mysecretpassword', {
-    host: 'localhost',
+const sequelize = new Sequelize(process.env.DB_NAME, 'postgres', process.env.DB_PASSWORD, {
+    host: process.env.DB_HOST,
     dialect: 'postgres',
-    port: 5440
-  });
+    port: parseInt(process.env.DB_PORT),
+});
 
   
-sequelize.authenticate().then(() => {
+sequelize.authenticate().then(async () => {
+    await sequelize.sync({ alter: true });
     console.log('Connection has been established successfully.');
 }).catch((err: any) => {
     console.error('Unable to connect to the database:', err);

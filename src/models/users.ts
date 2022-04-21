@@ -1,7 +1,9 @@
 import { Sequelize, DataTypes } from 'sequelize';
-const sequelize = new Sequelize();
+import 'dotenv/config';
+const sequelize = new Sequelize(`postgres://postgres:${process.env.DB_PASSWORD}@${process.env.DB_HOST}:${process.env.DB_PORT}/${process.env.DB_NAME}`);
 
-const User = sequelize.define('public.users', {
+
+const User = sequelize.define('users', {
   id: {
     type: DataTypes.INTEGER,
     autoIncrement: true,
@@ -13,17 +15,18 @@ const User = sequelize.define('public.users', {
   },
   email: {
     type: DataTypes.STRING,
-    allowNull: false
+    allowNull: false,
+    unique: true
     // allowNull defaults to true
   },
   password: {
-    type: DataTypes.INTEGER,
+    type: DataTypes.STRING,
     allowNull: false
     // allowNull defaults to true
   },
   lastName: {
     type: DataTypes.STRING,
-    allowNull: false
+    allowNull: false,
     // allowNull defaults to true
   }
 });

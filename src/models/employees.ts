@@ -1,5 +1,5 @@
 import { Sequelize, DataTypes } from 'sequelize';
-const sequelize = new Sequelize('sqlite::memory:');
+const sequelize = new Sequelize(`postgres://postgres:${process.env.DB_PASSWORD}@${process.env.DB_HOST}:${process.env.DB_PORT}/${process.env.DB_NAME}`);
 
 const Employee = sequelize.define('employee', {
   id: {
