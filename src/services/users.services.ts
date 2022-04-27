@@ -5,10 +5,11 @@ import { UserType } from 'types';
 export const addUser = async (req: any, res: any) => {
   const { body } = req;
   const saltRounds = 10;
+
   try {
     const hashPassword = await bcrypt.hash(body.password, saltRounds);
     const user = await User.create({ name: body.name, lastName: body.lastName, email: body.email, password: hashPassword });
-    res.json({ user });
+    res.json({ user, status: 201 });
   } catch (error) {
     throw error;
   }

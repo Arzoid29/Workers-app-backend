@@ -22,12 +22,17 @@ sequelize.authenticate().then(async () => {
     console.error('Unable to connect to the database:', err);
 });
   
-
-app.use(bodyParser.urlencoded({ extended: false, limit: '50mb' }));
+app.use(cors({
+    origin: ['http://localhost:4200'],
+    methods: ['GET', 'POST', 'PUT', 'DELETE'],
+    allowedHeaders: ['Content-Type', 'Authorization', 'Accept', 'Access-Control-Allow-Origin'],
+    preflightContinue: false,
+}));
+app.use(bodyParser.json({ limit: '50mb' }));
 app.use('/api/v1', router);
+
 
 
 app.listen(3000, ()=>{
     console.log("Server is running on port 3000");
 });
-app.use(cors());
