@@ -1,4 +1,5 @@
 import { Sequelize, DataTypes } from 'sequelize';
+import 'dotenv/config';
 const sequelize = new Sequelize(`postgres://postgres:${process.env.DB_PASSWORD}@${process.env.DB_HOST}:${process.env.DB_PORT}/${process.env.DB_NAME}`);
 
 const Employee = sequelize.define('employee', {
@@ -26,6 +27,8 @@ const Employee = sequelize.define('employee', {
     allowNull: false
     // allowNull defaults to true
   }
+}, {
+  tableName: 'employee',
 });
 
 export default Employee;
