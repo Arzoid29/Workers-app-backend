@@ -18,7 +18,7 @@ const Employee = sequelize.define('employee', {
     // allowNull defaults to true
   },
   salary: {
-    type: DataTypes.INTEGER,
+    type: DataTypes.STRING,
     allowNull: false
     // allowNull defaults to true
   },

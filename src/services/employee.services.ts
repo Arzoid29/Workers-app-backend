@@ -1,3 +1,4 @@
+import { where } from 'sequelize/types';
 import Employee from '../models/employees';
 
 
@@ -7,6 +8,14 @@ export const getEmployees = async (req: any, res: any) => {
         status: 200,
         message: 'Employees',
         employees: await Employee.findAll()
+    });
+};
+export const getEmployeesById = async (req: any, res: any) => {
+    const { id } = req.params;
+    return res.json({
+        status: 200,
+        message: 'Employees',
+        employees: await Employee.findOne({ where: { id }})
     });
 };
 export const addEmployees = async (req: any, res: any) => {
@@ -35,18 +44,12 @@ export const editEmployees = async (req: any, res: any) => {
     }
 };
 export const deleteEmployees = async (req: any, res: any) => {
-        
     const { id } = req.params;
     try {
-        const employee = await Employee.findByPk(id);
-        if(employee) {
-            await employee.destroy();
-            res.json({ employee, status: 201 });
+        const employee = await Employee.destroy({ where: { id: parseInt(id)}});
+        res.json({ employee, status: 201 });
+        
+    } catch (error) { 
+            throw error;
         }
-        else {
-            res.json({ status: 404, message: 'Employee not found' });
-        }
-} catch (error) {
-    throw error;
-}   
 };
